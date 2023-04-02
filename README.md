@@ -1,3 +1,8 @@
+# Site links
+
+[S3-website](http://kalinata-shop.s3-website-us-east-1.amazonaws.com)
+[CloudFront](https://d1ljtz4c5accc1.cloudfront.net)
+
 # Shop Angular Cloudfront
 
 Angular version: ~12.
