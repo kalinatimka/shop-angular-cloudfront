@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Product } from '../../products/product.interface';
 import { ProductsService } from '../../products/products.service';
 import { ManageProductsService } from './manage-products.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-manage-products',
@@ -33,9 +34,15 @@ export class ManageProductsComponent implements OnInit {
 
     this.manageProductsService
       .uploadProductsCSV(this.selectedFile)
-      .subscribe(() => {
-        this.selectedFile = null;
-        this.cdr.markForCheck();
+      .subscribe({
+        next: () => {
+          this.selectedFile = null;
+          this.cdr.markForCheck();
+        },
+        error: (errData: unknown) => {
+          const { status, error } = errData as HttpErrorResponse;
+          window.alert(`${status}: ${error.message}`);
+        }
       });
   }
 }
